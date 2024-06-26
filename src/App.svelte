@@ -225,7 +225,7 @@
         width: 100vw;
         height: 100vh;
         background-color: #000000;
-        overflow: scroll;
+        overflow: auto;
     }
     #panel {
         position: absolute;
