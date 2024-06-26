@@ -131,6 +131,7 @@
     let input_stage: boolean = true;
     $: input_stage = fields_filled < FIELDS;
     let points: number = 0;
+    $: if (fields_filled >= FIELDS) points = eval_points();
 
     const eval_points = (): number => {
         let points: number = 0;
@@ -168,7 +169,6 @@
         matrix[y][x] = next_field;
         next_field = random_field();
         fields_filled++;
-        if (fields_filled < FIELDS) points = eval_points();
     };
 
     const reset = () => {
