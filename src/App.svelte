@@ -154,7 +154,7 @@
         const diagonal_1_points = eval_row(diagonal_1);
         const diagonal_2_points = eval_row(diagonal_2);
         points += diagonal_1_points > 0 ? diagonal_1_points + DIAGONAL_BONUS : 0;
-        points += diagonal_2_points > 0 ? diagonal_1_points + DIAGONAL_BONUS : 0;
+        points += diagonal_2_points > 0 ? diagonal_2_points + DIAGONAL_BONUS : 0;
         return points;
     };
 
