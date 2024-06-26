@@ -3,6 +3,7 @@
     const FIELDS: number = DIM * DIM;
     const FIELD_MIN: number = 1;
     const FIELD_MAX: number = 13;
+    const DIAGONAL_BONUS: number = 10;
 
     const count_occurences = <T,>(arr: T[]): Map<T, number> => {
         const map = new Map<T, number>();
@@ -149,8 +150,10 @@
             diagonal_1.push(matrix[i][i]);
             diagonal_2.push(matrix[i][DIM - 1 - i]);
         }
-        points += eval_row(diagonal_1);
-        points += eval_row(diagonal_2);
+        const diagonal_1_points = eval_row(diagonal_1);
+        const diagonal_2_points = eval_row(diagonal_2);
+        points += diagonal_1_points > 0 ? diagonal_1_points + DIAGONAL_BONUS : 0;
+        points += diagonal_2_points > 0 ? diagonal_1_points + DIAGONAL_BONUS : 0;
         return points;
     };
 
