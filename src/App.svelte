@@ -16,14 +16,16 @@
 
     interface Rule {
         score: number;
-        check: (row: number[]) => boolean;
+        check: (row: number[], occurences: Map<number, number>) => boolean;
     }
 
     const rules: Rule[] = [
         {
             score: 150,
-            check: (row: number[]): boolean => {
-                const occurences = count_occurences(row);
+            check: (
+                row: number[],
+                occurences: Map<number, number>,
+            ): boolean => {
                 if (occurences.get(1) != 1) return false;
                 if (occurences.get(10) != 1) return false;
                 if (occurences.get(11) != 1) return false;
@@ -43,9 +45,11 @@
         },
         {
             score: 200,
-            check: (row: number[]): boolean => {
-                const one_occurences: number | undefined =
-                    count_occurences(row).get(1);
+            check: (
+                row: number[],
+                occurences: Map<number, number>,
+            ): boolean => {
+                const one_occurences: number | undefined = occurences.get(1);
                 if ((one_occurences == undefined ? 0 : one_occurences) >= 4)
                     return true;
                 return false;
@@ -53,8 +57,10 @@
         },
         {
             score: 160,
-            check: (row: number[]): boolean => {
-                const occurences = count_occurences(row);
+            check: (
+                row: number[],
+                occurences: Map<number, number>,
+            ): boolean => {
                 for (const [num, occ] of occurences.entries())
                     if (occ >= 4) return true;
                 return false;
@@ -62,8 +68,10 @@
         },
         {
             score: 80,
-            check: (row: number[]): boolean => {
-                const occurences = count_occurences(row);
+            check: (
+                row: number[],
+                occurences: Map<number, number>,
+            ): boolean => {
                 let duo_present = false;
                 let trio_present = false;
                 for (const [num, occ] of occurences.entries()) {
@@ -75,8 +83,10 @@
         },
         {
             score: 40,
-            check: (row: number[]): boolean => {
-                const occurences = count_occurences(row);
+            check: (
+                row: number[],
+                occurences: Map<number, number>,
+            ): boolean => {
                 for (const [num, occ] of occurences.entries())
                     if (occ == 3) return true;
                 return false;
@@ -84,11 +94,12 @@
         },
         {
             score: 20,
-            check: (row: number[]): boolean => {
+            check: (
+                row: number[],
+                occurences: Map<number, number>,
+            ): boolean => {
                 const occurence_occurences = count_occurences(
-                    [...count_occurences(row).entries()].map(
-                        ([num, occ]) => occ,
-                    ),
+                    [...occurences.entries()].map(([num, occ]) => occ),
                 );
                 if (occurence_occurences.get(2) == 2) return true;
                 return false;
@@ -96,8 +107,10 @@
         },
         {
             score: 10,
-            check: (row: number[]): boolean => {
-                const occurences = count_occurences(row);
+            check: (
+                row: number[],
+                occurences: Map<number, number>,
+            ): boolean => {
                 for (const [num, occ] of occurences.entries())
                     if (occ == 2) return true;
                 return false;
@@ -106,8 +119,9 @@
     ];
 
     const eval_row = (row: number[]): number => {
+        const occurences: Map<number, number> = count_occurences(row);
         for (let i = 0; i < rules.length; i++)
-            if (rules[i].check(row)) return rules[i].score;
+            if (rules[i].check(row, occurences)) return rules[i].score;
         return 0;
     };
 
