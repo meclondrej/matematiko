@@ -131,11 +131,11 @@
         x >= min && x <= max;
     const default_matrix = (): number[][] => {
         let def: number[][] = [];
-        for (let y = 0; y < DIM; y++) {
-            const row: number[] = [];
-            for (let x = 0; x < DIM; x++) row.push(0);
-            def.push(row);
-        }
+        let row: number[] = [];
+        for (let x = 0; x < DIM; x++)
+            row.push(0);
+        for (let y = 0; y < DIM; y++)
+            def.push(row.slice());
         return def;
     };
 
