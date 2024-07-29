@@ -175,13 +175,7 @@
     };
 
     const field_click = (x: number, y: number) => {
-        if (!input_stage) return;
-        if (
-            !inrange(y, 0, DIM - 1) ||
-            !inrange(x, 0, DIM - 1) ||
-            matrix[y][x] != 0
-        )
-            return;
+        if (!input_stage || matrix[y][x] != 0) return;
         matrix[y][x] = next_field;
         next_field = random_field();
         fields_filled++;
